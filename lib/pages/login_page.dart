@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:projeto_restaurante/pages/register_user.dart';
+import 'package:projeto_restaurante/utils/nav.dart';
 import 'package:projeto_restaurante/widgets/login_button.dart';
 import 'package:projeto_restaurante/widgets/login_text.dart';
 
@@ -48,7 +50,17 @@ class _LoginPageState extends State<LoginPage> {
                 validator: _validatorPassWord,
                 controller: _tPassWord),
             SizedBox(height: 20),
-            LoginButton("Entrar", _onClickLogin),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                AppButton("Entrar", onPressed: _onClickLogin),
+                SizedBox(width: 10),
+                AppButton(
+                  "Cadastrar",
+                  onPressed: _onClickRegister,
+                ),
+              ],
+            )
           ],
         ),
       ),
@@ -59,8 +71,6 @@ class _LoginPageState extends State<LoginPage> {
     if (!_formKey.currentState.validate()) {
       return;
     }
-    String login = _tLogin.text;
-    String PassWord = _tPassWord.text;
   }
 
   String _validatorLogin(String text) {
@@ -78,5 +88,9 @@ class _LoginPageState extends State<LoginPage> {
       return "A senha deve ter ao menos 5 números";
     }
     return null;
+  }
+
+  _onClickRegister() {
+    push(context, RegisterUser());
   }
 }
