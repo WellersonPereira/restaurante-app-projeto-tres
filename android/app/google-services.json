@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "49814105499",
+    "firebase_url": "https://carros-83166.firebaseio.com",
+    "project_id": "carros-83166",
+    "storage_bucket": "carros-83166.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:49814105499:android:91f1b3083e4122f372853e",
+        "android_client_info": {
+          "package_name": "br.com.projetorestaurante.projeto_restaurante"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "49814105499-krjqf260p638rki2j5eqvetauakjqbe3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "br.com.projetorestaurante.projeto_restaurante",
+            "certificate_hash": "deb100b91795aee9edb71e51616775ada50a7808"
+          }
+        },
+        {
+          "client_id": "49814105499-apph5r28gr91psqfd4svaqa8rvplqprt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC3tEXLxz8GYCC331r38lLNSIz__V2YPHM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "49814105499-apph5r28gr91psqfd4svaqa8rvplqprt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
