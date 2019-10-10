@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 
-class LoginText extends StatelessWidget {
+class AppText extends StatelessWidget {
+  //TODO: Implement input type
   String label;
   String hint;
   bool obscure = false;
   TextEditingController controller;
   FormFieldValidator<String> validator;
 
-  LoginText(
+  AppText(
     this.label,
     this.hint, {
     this.obscure = false,

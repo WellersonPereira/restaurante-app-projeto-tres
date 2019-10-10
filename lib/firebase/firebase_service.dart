@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:projeto_restaurante/Model/usuario.dart';
 import 'package:projeto_restaurante/api_response.dart';
@@ -6,6 +7,23 @@ import 'package:projeto_restaurante/api_response.dart';
 class FirebaseService {
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  Future<ApiResponse> cadastrar(String nome, String email, String senha) async {
+    try {
+      final FirebaseUser fUser = (await _auth.createUserWithEmailAndPassword(email: email, password: senha)).user;
+      print("Usuario criado: ${fUser.displayName}");
+
+      final userUpdateInfo = UserUpdateInfo();
+      userUpdateInfo.displayName = nome;
+      userUpdateInfo.photoUrl = "";
+      fUser.updateProfile(userUpdateInfo);
+
+      return ApiResponse.ok();
+    } catch (error) {
+      print("Firebase error $error");
+      return ApiResponse.error(msg: "Não foi possível fazer o login");
+    }
+  }
 
   Future<ApiResponse> login(String email, String senha) async {
     try {

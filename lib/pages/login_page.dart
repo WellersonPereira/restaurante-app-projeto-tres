@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_auth_buttons/flutter_auth_buttons.dart';
@@ -11,12 +13,15 @@ import 'package:projeto_restaurante/utils/nav.dart';
 import 'package:projeto_restaurante/widgets/login_button.dart';
 import 'package:projeto_restaurante/widgets/login_text.dart';
 
+import '../api_response.dart';
+
 class LoginPage extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final _streamController = StreamController<bool>();
   final _formKey = GlobalKey<FormState>();
   final _tEmail = TextEditingController();
   final _tPassWord = TextEditingController();
@@ -45,14 +50,14 @@ class _LoginPageState extends State<LoginPage> {
         padding: EdgeInsets.all(16),
         child: ListView(
           children: <Widget>[
-            LoginText(
+            AppText(
               "Email",
               "joaozinho@hotmail.com",
               controller: _tEmail,
               validator: _validatorLogin,
             ),
             SizedBox(height: 10),
-            LoginText("Senha", "Digite sua senha",
+            AppText("Senha", "Digite sua senha",
                 obscure: true,
                 validator: _validatorPassWord,
                 controller: _tPassWord),
@@ -67,10 +72,16 @@ class _LoginPageState extends State<LoginPage> {
                   width: 10,
                 ),
                 Expanded(
-                    child: AppButton(
+                    child: StreamBuilder<bool>(
+                      stream: _streamController.stream,
+                      initialData: false,
+                      builder: (context, snapshot) {
+                        return AppButton(
                   "Novato",
                   onPressed: _onClickRegister,
-                )),
+                );
+                      }
+                    )),
               ],
             ),
             Container(
@@ -105,8 +116,15 @@ class _LoginPageState extends State<LoginPage> {
     String email = _tEmail.text;
     String password = _tPassWord.text;
 
-    ApiResponse response = await _bloc.login(email, password);
-    push(context, HomePage());
+    final service = FirebaseService();
+    final response = await service.login(email, password);
+
+    if (response.ok) {
+      push(context, HomePage(), replace: true);
+    }
+    else
+      alert(context, response.msg,);
+
   }
 
   String _validatorLogin(String text) {
@@ -127,6 +145,6 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   _onClickRegister() {
-    push(context, RegisterUser());
+    push(context, RegisterUser(), replace: true);
   }
 }
