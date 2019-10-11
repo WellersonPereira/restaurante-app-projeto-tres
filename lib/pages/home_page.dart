@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:projeto_restaurante/Model/prato.dart';
 import 'package:projeto_restaurante/drawer_list.dart';
+import 'package:projeto_restaurante/pages/lista_pratos.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -36,7 +38,7 @@ class _HomePageState extends State<HomePage> {
         ),
         body: TabBarView(
           children: <Widget>[
-            Container(child: Center(child: Text("pag0"),),),
+            ListaPratos(),
             Container(child: Center(child: Text("pag1"),),),
             Container(child: Center(child: Text("pag2"),),),
           ],

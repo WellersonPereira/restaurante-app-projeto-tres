@@ -99,7 +99,7 @@ class _RegisterUserState extends State<RegisterUser> {
     print("Cadastrado Sr.$name $email");
 
     final service = FirebaseService();
-    final response = await service.cadastrar(name, email, password);
+    final response = await service.cadastrar(name, email, password, cpf);
 
     if (response.ok) {
       push(context, HomePage(), replace: true);
