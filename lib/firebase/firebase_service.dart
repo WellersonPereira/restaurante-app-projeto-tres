@@ -9,7 +9,8 @@ class FirebaseService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   Future<ApiResponse> cadastrar(
-      String nome, String email, String senha, String cpf) async {
+      //Cadastra um usuário com login e senha.
+      String nome, String email, String senha) async {
     try {
       final FirebaseUser fUser = (await _auth.createUserWithEmailAndPassword(
               email: email, password: senha))
@@ -19,7 +20,7 @@ class FirebaseService {
       Firestore.instance
           .collection('clientes')
           .document()
-          .setData({'nome': nome, 'email': email, 'cpf': cpf});
+          .setData({'nome': nome, 'email': email, 'senha': senha});
 
       final userUpdateInfo = UserUpdateInfo();
       userUpdateInfo.displayName = nome;
@@ -35,7 +36,7 @@ class FirebaseService {
 
   Future<ApiResponse> login(String email, String senha) async {
     try {
-      // Login no Firebase
+      // Login no Firebase com email e senha.
       AuthResult result =
           await _auth.signInWithEmailAndPassword(email: email, password: senha);
       final FirebaseUser fuser = result.user;
@@ -90,6 +91,12 @@ class FirebaseService {
         urlFoto: fuser.photoUrl,
       );
       user.save();
+
+      //Salva os dados do usuário no firestore.
+      Firestore.instance
+          .collection('clientes')
+          .document()
+          .setData({'nome': fuser.displayName, 'email': fuser.email});
 
       // Resposta genérica
       return ApiResponse.ok();

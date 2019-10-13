@@ -1,22 +1,23 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:projeto_restaurante/Model/prato.dart';
-import 'package:projeto_restaurante/pages/pratos_listview.dart';
+import 'package:projeto_restaurante/pages/pratos/pratos_listview.dart';
 
 class ListaPratos extends StatefulWidget {
-  //Prato prato;
-  //PratosPage(this.prato);
+  String tipo;
+  ListaPratos(this.tipo);
 
   @override
   _ListaPratosState createState() => _ListaPratosState();
 }
-//TODO:Criar uma colection para cada tipo de prato e fazer com que uma String receba-a. Ex "Entrada" invês de "Comida"
+class _ListaPratosState extends State<ListaPratos> with AutomaticKeepAliveClientMixin {
 
-class _ListaPratosState extends State<ListaPratos> {
+  String get tipo => widget.tipo;
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: Firestore.instance.collection('comida').snapshots(),
+      stream: Firestore.instance.collection("Pratos").where("tipo", isEqualTo: tipo).where("disponivel", isEqualTo: true).snapshots(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           final List<Prato> pratos =
@@ -34,4 +35,8 @@ class _ListaPratosState extends State<ListaPratos> {
       },
     );
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }

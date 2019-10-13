@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_restaurante/Model/prato.dart';
-import 'package:projeto_restaurante/pages/prato_page.dart';
+import 'package:projeto_restaurante/pages/pratos/prato_page.dart';
 import 'package:projeto_restaurante/utils/nav.dart';
-
 
 class PratoListView extends StatelessWidget {
   final List<Prato> pratos;
+
   PratoListView(this.pratos);
 
   @override
@@ -16,7 +16,6 @@ class PratoListView extends StatelessWidget {
         itemCount: pratos.length,
         itemBuilder: (context, index) {
           Prato p = pratos[index];
-
           return Card(
             color: Colors.grey[100],
             child: Container(
@@ -26,7 +25,7 @@ class PratoListView extends StatelessWidget {
                 children: <Widget>[
                   Center(
                     child: Image.network(
-                      p.fotoUrl ??
+                      p.urlFoto ??
                           "http://www.livroandroid.com.br/livro/carros/esportivos/Ferrari_FF.png",
                       width: 250,
                     ),
@@ -38,11 +37,13 @@ class PratoListView extends StatelessWidget {
                     style: TextStyle(fontSize: 25),
                   ),
                   Text(
-                    "descrição...",
+                    p.descricao,
+                    maxLines: 1,
+                    overflow: TextOverflow.clip,
                     style: TextStyle(fontSize: 16),
                   ),
+                  Text("R\$" + p.valor),
                   ButtonTheme.bar(
-                    // make buttons use the appropriate styles for cards
                     child: ButtonBar(
                       children: <Widget>[
                         FlatButton(

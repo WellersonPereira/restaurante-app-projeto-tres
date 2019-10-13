@@ -19,7 +19,7 @@ class PratoPage extends StatelessWidget {
   _body() {
     return Container(
       padding: EdgeInsets.all(16),
-      child: Image.network(prato.fotoUrl),
+      child: Image.network(prato.urlFoto),
     );
   }
 }

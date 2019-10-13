@@ -20,9 +20,10 @@ dependencies:
   flutter:
     sdk: flutter
   shared_preferences: ^0.5.3+4
-
   cached_network_image: ^1.1.1
 
+  #QrCode
+  barcode_scan: ^1.0.0
 
   #Firebase
   flutter_auth_buttons: ^0.5.0

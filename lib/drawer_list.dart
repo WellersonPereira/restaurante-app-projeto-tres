@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/material.dart' as prefix0;
 import 'package:projeto_restaurante/Model/usuario.dart';
 import 'package:projeto_restaurante/firebase/firebase_service.dart';
-import 'package:projeto_restaurante/pages/login_page.dart';
+import 'package:projeto_restaurante/pages/login/login_page.dart';
 import 'package:projeto_restaurante/utils/nav.dart';
 
 class DrawerList extends StatelessWidget {

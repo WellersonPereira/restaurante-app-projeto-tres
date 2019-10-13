@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:projeto_restaurante/Model/usuario.dart';
 import 'package:projeto_restaurante/api_response.dart';
 import 'package:projeto_restaurante/firebase/firebase_service.dart';
 

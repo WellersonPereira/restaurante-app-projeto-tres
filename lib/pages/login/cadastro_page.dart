@@ -1,19 +1,19 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:projeto_restaurante/firebase/firebase_service.dart';
 import 'package:projeto_restaurante/pages/home_page.dart';
-import 'package:projeto_restaurante/pages/login_page.dart';
 import 'package:projeto_restaurante/utils/alert.dart';
 import 'package:projeto_restaurante/utils/nav.dart';
 import 'package:projeto_restaurante/widgets/login_button.dart';
 import 'package:projeto_restaurante/widgets/login_text.dart';
 
-class RegisterUser extends StatefulWidget {
+import 'login_page.dart';
+
+class Cadastro extends StatefulWidget {
   @override
-  _RegisterUserState createState() => _RegisterUserState();
+  _CadastroState createState() => _CadastroState();
 }
 
-class _RegisterUserState extends State<RegisterUser> {
+class _CadastroState extends State<Cadastro> {
   final _formKey = GlobalKey<FormState>();
   final _tName = TextEditingController();
   final _tEmail = TextEditingController();
@@ -38,7 +38,7 @@ class _RegisterUserState extends State<RegisterUser> {
         padding: EdgeInsets.all(16),
         child: ListView(
           children: <Widget>[
-            //TODO: Implement focus;
+            //TODO: Implementar focus;
             AppText(
               "Nome",
               "Informe seu nome",
@@ -50,14 +50,7 @@ class _RegisterUserState extends State<RegisterUser> {
               "Email",
               "Informe seu Email",
               controller: _tEmail,
-              validator: _validateLastName,
-            ),
-            SizedBox(height: 10),
-            AppText(
-              "CPF",
-              "Informe seu CPF",
-              controller: _tCpf,
-              validator: _validateCpf,
+              validator: _validateEmail,
             ),
             SizedBox(height: 10),
             AppText(
@@ -93,13 +86,12 @@ class _RegisterUserState extends State<RegisterUser> {
 
     String name = _tName.text;
     String email = _tEmail.text;
-    String cpf = _tCpf.text;
     String password = _tPassword.text;
 
     print("Cadastrado Sr.$name $email");
 
     final service = FirebaseService();
-    final response = await service.cadastrar(name, email, password, cpf);
+    final response = await service.cadastrar(name, email, password);
 
     if (response.ok) {
       push(context, HomePage(), replace: true);
@@ -110,21 +102,14 @@ class _RegisterUserState extends State<RegisterUser> {
 
   String _validateName(String text) {
     if (text.isEmpty) {
-      return "Digite o login";
+      return "Digite seu nome";
     }
     return null;
   }
 
-  String _validateLastName(String text) {
+  String _validateEmail(String text) {
     if (text.isEmpty) {
-      return "Digite o login";
-    }
-    return null;
-  }
-
-  String _validateCpf(String text) {
-    if (text.isEmpty) {
-      return "Digite o login";
+      return "Digite um email válido";
     }
     return null;
   }
