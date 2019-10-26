@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_restaurante/drawer_list.dart';
-import 'package:projeto_restaurante/pages/pratos/lista_pratos.dart';
+import 'package:projeto_restaurante/model/mesa.dart';
+import 'package:projeto_restaurante/pages/pratos/query_pratos.dart';
 
 class HomePage extends StatefulWidget {
+
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -13,14 +15,13 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
   }
-
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 3,
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Carros1"),
+          title: Text("Restaurante"),
           bottom: TabBar(
             tabs: [
               Tab(
@@ -30,16 +31,16 @@ class _HomePageState extends State<HomePage> {
                 text: "Sobremesa",
               ),
               Tab(
-                text: "Bebidas",
+                text: "id",
               )
             ],
           ),
         ),
         body: TabBarView(
           children: <Widget>[
-            ListaPratos("Entrada"),
-            ListaPratos("Sobremesa"),
-            ListaPratos("Bebidas")
+            QueryPratos("Entrada"),
+            QueryPratos("Sobremesa"),
+            QueryPratos("Bebidas")
           ],
         ),
         drawer: DrawerList(),

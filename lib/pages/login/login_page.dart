@@ -10,7 +10,7 @@ import 'package:projeto_restaurante/pages/login/login_block.dart';
 import 'package:projeto_restaurante/pages/login/cadastro_page.dart';
 import 'package:projeto_restaurante/utils/alert.dart';
 import 'package:projeto_restaurante/utils/nav.dart';
-import 'package:projeto_restaurante/utils/qr_code.dart';
+import 'package:projeto_restaurante/pages/pratos/qr_code.dart';
 import 'package:projeto_restaurante/widgets/login_button.dart';
 import 'package:projeto_restaurante/widgets/login_text.dart';
 

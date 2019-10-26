@@ -93,10 +93,11 @@ class FirebaseService {
       user.save();
 
       //Salva os dados do usuário no firestore.
-      Firestore.instance
+      //TODO:Verificar a necessidade disso.
+      /*Firestore.instance
           .collection('clientes')
           .document()
-          .setData({'nome': fuser.displayName, 'email': fuser.email});
+          .setData({'nome': fuser.displayName, 'email': fuser.email});*/
 
       // Resposta genérica
       return ApiResponse.ok();

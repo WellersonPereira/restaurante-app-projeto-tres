@@ -1,21 +1,20 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:projeto_restaurante/Model/prato.dart';
-import 'package:projeto_restaurante/pages/pratos/prato_page.dart';
-import 'package:projeto_restaurante/utils/nav.dart';
+import 'package:projeto_restaurante/model/conta.dart';
 
-class PratoListView extends StatelessWidget {
-  final List<Prato> pratos;
+class ShowConta extends StatelessWidget {
+  final List<Conta> conta;
+  ShowConta.conta(this.conta);
 
-  PratoListView(this.pratos);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(16),
       child: ListView.builder(
-        itemCount: pratos.length,
+        itemCount: conta.length,
         itemBuilder: (context, index) {
-          Prato p = pratos[index];
+          Conta c = conta[index];
           return Card(
             color: Colors.grey[100],
             child: Container(
@@ -23,32 +22,19 @@ class PratoListView extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Center(
-                    child: Image.network(
-                      p.urlFoto ??
-                          "http://www.livroandroid.com.br/livro/carros/esportivos/Ferrari_FF.png",
-                      width: 250,
-                    ),
-                  ),
                   Text(
-                    p.nome,
+                    c.prato,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(fontSize: 25),
                   ),
-                  Text(
-                    p.descricao,
-                    maxLines: 1,
-                    overflow: TextOverflow.clip,
-                    style: TextStyle(fontSize: 16),
-                  ),
-                  Text("R\$" + p.valor),
+                  Text("R\$" + c.valor),
                   ButtonTheme.bar(
                     child: ButtonBar(
                       children: <Widget>[
                         FlatButton(
-                          child: const Text('DETALHES'),
-                          onPressed: () => _onClickPrato(context, p),
+                          child: const Text('Delete'),
+                          onPressed: _delete
                         ),
                         FlatButton(
                           child: const Text('BUTTON'),
@@ -68,7 +54,9 @@ class PratoListView extends StatelessWidget {
     );
   }
 
-  _onClickPrato(BuildContext context, Prato p) {
-    push(context, PratoPage(p));
+  void _delete() {
+
+    Firestore.instance.collection("Mesas").document("002").collection("Pedidos").document().delete();
+    print(Firestore.instance.collection("Mesas").document("002").collection("Pedidos").document().documentID);
   }
 }

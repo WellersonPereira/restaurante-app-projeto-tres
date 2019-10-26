@@ -1,42 +1,74 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:projeto_restaurante/Model/prato.dart';
-import 'package:projeto_restaurante/pages/pratos/pratos_listview.dart';
+import 'package:projeto_restaurante/pages/pratos/prato_page.dart';
+import 'package:projeto_restaurante/utils/nav.dart';
 
-class ListaPratos extends StatefulWidget {
-  String tipo;
-  ListaPratos(this.tipo);
+class ListaPrato extends StatelessWidget {
+  final List<Prato> pratos;
 
-  @override
-  _ListaPratosState createState() => _ListaPratosState();
-}
-class _ListaPratosState extends State<ListaPratos> with AutomaticKeepAliveClientMixin {
-
-  String get tipo => widget.tipo;
+  ListaPrato.prato(this.pratos);
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<QuerySnapshot>(
-      stream: Firestore.instance.collection("Pratos").where("tipo", isEqualTo: tipo).where("disponivel", isEqualTo: true).snapshots(),
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          final List<Prato> pratos =
-              snapshot.data.documents.map((document) {
-            return Prato.fromJson(document.data);
-          }).toList();
-          return PratoListView(pratos);
-        } else if (snapshot.hasError)
-          return new Text('Error: ${snapshot.error}');
-        {
-          return Center(
-            child: Text("Sem dados"),
+    return Container(
+      padding: EdgeInsets.all(16),
+      child: ListView.builder(
+        itemCount: pratos.length,
+        itemBuilder: (context, index) {
+          Prato p = pratos[index];
+          return Card(
+            color: Colors.grey[100],
+            child: Container(
+              padding: EdgeInsets.all(10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Center(
+                    child: Image.network(
+                      p.urlFoto ??
+                          "",
+                      width: 250,
+                    ),
+                  ),
+                  Text(
+                    p.nome,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(fontSize: 25),
+                  ),
+                  Text(
+                    p.descricao,
+                    maxLines: 1,
+                    overflow: TextOverflow.clip,
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  Text("R\$" + p.valor),
+                  ButtonTheme.bar(
+                    child: ButtonBar(
+                      children: <Widget>[
+                        FlatButton(
+                          child: const Text('DETALHES'),
+                          onPressed: () => _onClickPrato(context, p),
+                        ),
+                        FlatButton(
+                          child: const Text('BUTTON'),
+                          onPressed: () {
+                            /* ... */
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
           );
-        }
-      },
+        },
+      ),
     );
   }
 
-  @override
-  // TODO: implement wantKeepAlive
-  bool get wantKeepAlive => true;
+  _onClickPrato(BuildContext context, Prato p) {
+    push(context, PratoPage(prato: p,));
+  }
 }

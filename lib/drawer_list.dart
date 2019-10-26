@@ -4,6 +4,8 @@ import 'package:flutter/material.dart' as prefix0;
 import 'package:projeto_restaurante/Model/usuario.dart';
 import 'package:projeto_restaurante/firebase/firebase_service.dart';
 import 'package:projeto_restaurante/pages/login/login_page.dart';
+import 'package:projeto_restaurante/pages/pratos/query_conta.dart';
+import 'package:projeto_restaurante/pages/pratos/show_conta.dart';
 import 'package:projeto_restaurante/utils/nav.dart';
 
 class DrawerList extends StatelessWidget {
@@ -33,14 +35,11 @@ class DrawerList extends StatelessWidget {
               },
             ),
             ListTile(
-              leading: Icon(Icons.star),
-              title: Text("Favoritos"),
+              leading: Icon(Icons.attach_money),
+              title: Text("Conta"),
               subtitle: Text("mais informações..."),
               trailing: Icon(Icons.arrow_forward),
-              onTap: () {
-                print("Item 1");
-                Navigator.pop(context);
-              },
+              onTap: () => push(context, QueryConta())
             ),
             ListTile(
               leading: Icon(Icons.help),
