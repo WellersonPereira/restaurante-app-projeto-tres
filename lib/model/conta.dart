@@ -1,7 +1,12 @@
 class Conta {
   String id;
   String prato;
+  static String pratoId;
   String valor;
+
+  static setPratoId(String pratoId){
+    Conta.pratoId = pratoId;
+  }
 
   Conta({this.id, this.prato, this.valor});
 

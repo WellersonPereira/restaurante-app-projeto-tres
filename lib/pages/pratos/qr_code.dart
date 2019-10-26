@@ -78,10 +78,14 @@ class _QrScanState extends State<QrScan> {
         String hora = TimeOfDay.now().toString().substring(10, 15);
         String id = "$barcode$hora";
 
+
         //final chegada = TimeOfDay.now().toString().substring(10, 15);
+        //TODO: Set id.
+
+        Mesa.setId(id);
         Firestore.instance
             .collection("Mesas")
-            .document(id)
+            .document(Mesa.id)
             .setData({"mesa": barcode, "cliente": nomeUser, "chegada": hora, "ocupada": true});
 
         push(context, HomePage(), replace: true);

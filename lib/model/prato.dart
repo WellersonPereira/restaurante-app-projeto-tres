@@ -1,5 +1,5 @@
 class Prato {
-  int id;
+  String id;
   String nome;
   String tipo;
   String descricao;

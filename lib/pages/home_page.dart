@@ -31,7 +31,7 @@ class _HomePageState extends State<HomePage> {
                 text: "Sobremesa",
               ),
               Tab(
-                text: "id",
+                text: "Bebidas",
               )
             ],
           ),

@@ -1,14 +1,7 @@
-class Mesa {
-  String id;
+class Mesa{
+ static String id;
 
-  Mesa(String id);
-
-  String setMesa(String id) {
-    this.id = id;
-  }
-
- String getMesa() {
-   return id;
+ static setId( String id){
+   Mesa.id = id;
  }
-
 }

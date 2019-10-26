@@ -1,11 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:projeto_restaurante/model/conta.dart';
+import 'package:projeto_restaurante/model/mesa.dart';
+import 'package:projeto_restaurante/model/prato.dart';
 
 class ShowConta extends StatelessWidget {
   final List<Conta> conta;
-  ShowConta.conta(this.conta);
 
+  ShowConta.conta(this.conta);
 
   @override
   Widget build(BuildContext context) {
@@ -33,9 +35,7 @@ class ShowConta extends StatelessWidget {
                     child: ButtonBar(
                       children: <Widget>[
                         FlatButton(
-                          child: const Text('Delete'),
-                          onPressed: _delete
-                        ),
+                            child: const Text('Delete'), onPressed: () =>_delete(c)),
                         FlatButton(
                           child: const Text('BUTTON'),
                           onPressed: () {
@@ -54,9 +54,12 @@ class ShowConta extends StatelessWidget {
     );
   }
 
-  void _delete() {
-
-    Firestore.instance.collection("Mesas").document("002").collection("Pedidos").document().delete();
-    print(Firestore.instance.collection("Mesas").document("002").collection("Pedidos").document().documentID);
+  void _delete(Conta c) {
+    Firestore.instance
+        .collection("Mesas")
+        .document(Mesa.id)
+        .collection("Pedidos")
+        .document(Conta.pratoId).delete();
+    print(Conta.pratoId);
   }
 }
