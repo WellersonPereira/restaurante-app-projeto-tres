@@ -10,7 +10,7 @@ class QueryConta extends StatefulWidget {
 }
 
 class _QueryContaState extends State<QueryConta> {
-  var local = Firestore.instance
+  var db = Firestore.instance
       .collection("Mesas")
       .document(Mesa.id)
       .collection("Pedidos");
@@ -18,7 +18,7 @@ class _QueryContaState extends State<QueryConta> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: local.snapshots(),
+      stream: db.where("quantidade", isGreaterThan: 0).snapshots(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           final List<Conta> contas = snapshot.data.documents.map((document) {

@@ -5,11 +5,9 @@ import 'package:projeto_restaurante/model/conta.dart';
 import 'package:projeto_restaurante/model/mesa.dart';
 
 class PratoPage extends StatefulWidget {
-  Prato prato;
+  Prato prato = Prato();
 
-  PratoPage({
-    this.prato,
-  });
+  PratoPage({this.prato});
 
   @override
   _PratoPageState createState() => _PratoPageState();
@@ -35,7 +33,8 @@ class _PratoPageState extends State<PratoPage> {
         children: <Widget>[
           Image.network(prato.urlFoto),
           Text(prato.descricao),
-          FlatButton(child: const Text("Quero"), onPressed:() => _addPrato(prato))
+          FlatButton(
+              child: const Text("Quero"), onPressed: () => _addPrato(prato))
         ],
       ),
     );
@@ -43,14 +42,33 @@ class _PratoPageState extends State<PratoPage> {
 
   //TODO: Set Id.
   _addPrato(Prato prato) {
-    Firestore.instance
+    var db = Firestore.instance
         .collection("Mesas")
         .document(Mesa.id)
         .collection("Pedidos")
-        .document(prato.id.toString())
-        .setData({"prato": prato.nome, "valor": prato.valor});
+        .document(prato.id.toString());
 
-    Conta.pratoId = prato.id.toString();
-    print(Conta.pratoId);
+    try {
+      //Prato.qtd = 1;
+      Firestore.instance
+          .collection("Mesas")
+          .document(Mesa.id)
+          .collection("Pedidos")
+          .document(prato.id.toString())
+          .updateData({
+        "prato": prato.nome,
+        "valor": prato.valor,
+        "quantidade": Prato.qtd
+      });
+      print(false);
+    } finally {
+      Prato.qtd++;
+      db.setData(
+          {"prato": prato.nome, "valor": prato.valor, "quantidade": Prato.qtd});
+      print(Prato.qtd);
+      Conta.pratoId = prato.id.toString();
+      Prato.qtd = Prato.qtd;
+    }
+    //{"prato": prato.nome, "valor": prato.valor, "quantidade": prato.qtd}
   }
 }

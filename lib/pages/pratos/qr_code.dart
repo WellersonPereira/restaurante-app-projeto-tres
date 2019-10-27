@@ -74,7 +74,7 @@ class _QrScanState extends State<QrScan> {
         //Salva a mesa e o cliente no banco de dados;
         //TODO: Implementar verificação se a mesa já está ocupada {if mesa x is ocupada == true => error}
 
-        //Criando Id = barcode + TimeOfDay.now().toString();
+        //Criando Id
         String hora = TimeOfDay.now().toString().substring(10, 15);
         String id = "$barcode$hora";
 

@@ -2,10 +2,15 @@ class Conta {
   String id;
   String prato;
   static String pratoId;
+  static int quantidade;
   String valor;
 
-  static setPratoId(String pratoId){
+  static setPratoId(String pratoId) {
     Conta.pratoId = pratoId;
+  }
+
+  static setQuantidade(int quantidade) {
+    Conta.quantidade = quantidade;
   }
 
   Conta({this.id, this.prato, this.valor});

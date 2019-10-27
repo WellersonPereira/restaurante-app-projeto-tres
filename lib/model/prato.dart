@@ -5,8 +5,12 @@ class Prato {
   String descricao;
   bool disponivel;
   String valor;
+  static int qtd;
   String urlFoto;
 
+  static setQuantidade(int quantidade) {
+    Prato.qtd = quantidade;
+  }
 
   Prato({this.id, this.nome, this.tipo, this.descricao, this.disponivel,
       this.valor, this.urlFoto});
@@ -18,6 +22,7 @@ class Prato {
     descricao = json['descricao'];
     disponivel = json['disponivel'];
     valor = json['valor'];
+    //qtd = json['quantidade'];
     urlFoto = json['urlFoto'];
   }
 
@@ -29,6 +34,7 @@ class Prato {
     data['descricao'] = this.descricao;
     data['disponivel'] = this.disponivel;
     data['valor'] = this.valor;
+    //data['quantidade'] = this.qtd;
     data['urlfoto'] = this.urlFoto;
     return data;
   }
