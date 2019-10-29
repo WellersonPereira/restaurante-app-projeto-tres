@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:projeto_restaurante/model/conta.dart';
-import 'package:projeto_restaurante/model/mesa.dart';
 import 'package:projeto_restaurante/pages/pratos/show_conta.dart';
 
 class QueryConta extends StatefulWidget {
@@ -10,15 +9,17 @@ class QueryConta extends StatefulWidget {
 }
 
 class _QueryContaState extends State<QueryConta> {
-  var db = Firestore.instance
+  var db = Firestore.instance.collectionGroup("Pedidos");
+
+  /*var db = Firestore.instance
       .collection("Mesas")
       .document(Mesa.id)
-      .collection("Pedidos");
+      .collection("Pedidos");*/
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: db.where("quantidade", isGreaterThan: 0).snapshots(),
+      stream: db.where("status", isEqualTo: "enviado").snapshots(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           final List<Conta> contas = snapshot.data.documents.map((document) {

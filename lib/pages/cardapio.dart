@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_restaurante/drawer_list.dart';
-import 'package:projeto_restaurante/model/mesa.dart';
 import 'package:projeto_restaurante/pages/pratos/query_pratos.dart';
 
-class HomePage extends StatefulWidget {
+class Cardapio extends StatefulWidget {
 
   @override
-  _HomePageState createState() => _HomePageState();
+  _CardapioState createState() => _CardapioState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _CardapioState extends State<Cardapio> {
 
   @override
   void initState() {

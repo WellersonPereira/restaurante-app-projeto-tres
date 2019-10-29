@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:projeto_restaurante/Model/prato.dart';
@@ -9,7 +10,6 @@ import 'package:projeto_restaurante/utils/nav.dart';
 
 class ListaPrato extends StatefulWidget {
   final List<Prato> pratos;
-
   ListaPrato.prato(this.pratos);
 
   @override
@@ -109,26 +109,5 @@ class _ListaPratoState extends State<ListaPrato> {
       Conta.pratoId = prato.id.toString();
       Conta.quantidade = Prato.qtd;
     }
-
-    /*if (db.get() == null) {
-      int qtd = Prato.qtd;
-      qtd++;
-      db.setData({"prato": prato.nome, "valor": prato.valor, "quantidade": qtd});
-      print(qtd);
-      Conta.pratoId = prato.id.toString();
-    }
-
-    else {
-      Prato.qtd = 1;
-      Firestore.instance
-          .collection("Mesas")
-          .document(Mesa.id)
-          .collection("Pedidos")
-          .document(prato.id.toString())
-          .updateData(
-          {"prato": prato.nome, "valor": prato.valor, "quantidade": Prato.qtd});
-      print(false);
-
-    }*/
   }
 }

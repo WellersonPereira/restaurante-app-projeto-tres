@@ -10,7 +10,9 @@ class FirebaseService {
 
   Future<ApiResponse> cadastrar(
       //Cadastra um usuário com login e senha.
-      String nome, String email, String senha) async {
+      String nome,
+      String email,
+      String senha) async {
     try {
       final FirebaseUser fUser = (await _auth.createUserWithEmailAndPassword(
               email: email, password: senha))
@@ -18,9 +20,9 @@ class FirebaseService {
       print("Usuario criado: ${fUser.displayName}");
 
       Firestore.instance
-          .collection('clientes')
-          .document()
-          .setData({'nome': nome, 'email': email, 'senha': senha});
+          .collection('Clientes')
+          .document(fUser.uid)
+          .setData({'nome': nome, 'email': email, 'role': "cliente"});
 
       final userUpdateInfo = UserUpdateInfo();
       userUpdateInfo.displayName = nome;
@@ -57,7 +59,7 @@ class FirebaseService {
       return ApiResponse.ok();
     } catch (error) {
       print("Firebase error $error");
-      return ApiResponse.error(msg: "Não foi possível fazer o login");
+      //return ApiResponse.error(msg: "Não foi possível fazer o login");
     }
   }
 
@@ -92,12 +94,11 @@ class FirebaseService {
       );
       user.save();
 
-      //Salva os dados do usuário no firestore.
-      //TODO:Verificar a necessidade disso.
-      /*Firestore.instance
-          .collection('clientes')
-          .document()
-          .setData({'nome': fuser.displayName, 'email': fuser.email});*/
+      //Cadastra o usuário no DB
+      Firestore.instance
+          .collection('Clientes')
+          .document(fuser.uid)
+          .updateData({'nome': fuser.displayName, 'email': fuser.email});
 
       // Resposta genérica
       return ApiResponse.ok();

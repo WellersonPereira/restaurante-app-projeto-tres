@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_restaurante/firebase/firebase_service.dart';
-import 'package:projeto_restaurante/pages/home_page.dart';
+import 'package:projeto_restaurante/pages/cardapio.dart';
+import 'package:projeto_restaurante/pages/pratos/home.dart';
 import 'package:projeto_restaurante/utils/alert.dart';
 import 'package:projeto_restaurante/utils/nav.dart';
 import 'package:projeto_restaurante/widgets/login_button.dart';

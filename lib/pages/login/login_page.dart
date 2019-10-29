@@ -1,19 +1,18 @@
 import 'dart:async';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_auth_buttons/flutter_auth_buttons.dart';
 import 'package:projeto_restaurante/api_response.dart';
 import 'package:projeto_restaurante/firebase/firebase_service.dart';
-import 'package:projeto_restaurante/pages/home_page.dart';
 import 'package:projeto_restaurante/pages/login/login_block.dart';
 import 'package:projeto_restaurante/pages/login/cadastro_page.dart';
 import 'package:projeto_restaurante/utils/alert.dart';
 import 'package:projeto_restaurante/utils/nav.dart';
-import 'package:projeto_restaurante/pages/pratos/qr_code.dart';
+import 'package:projeto_restaurante/pages/pratos/home.dart';
 import 'package:projeto_restaurante/widgets/login_button.dart';
 import 'package:projeto_restaurante/widgets/login_text.dart';
-
 import '../../api_response.dart';
 
 class LoginPage extends StatefulWidget {
@@ -103,7 +102,7 @@ class _LoginPageState extends State<LoginPage> {
     ApiResponse response = await service.loginGoogle();
 
     if (response.ok) {
-      push(context, QrScan(), replace: true);
+      push(context, HomePage(), replace: true);
     } else {
       alert(context, response.msg);
     }
@@ -120,12 +119,12 @@ class _LoginPageState extends State<LoginPage> {
     final service = FirebaseService();
     final response = await service.login(email, password);
 
+
     if (response.ok) {
-      push(context, QrScan(), replace: true);
+      push(context, HomePage(), replace: true);
     }
     else
       alert(context, response.msg,);
-
   }
 
   String _validatorLogin(String text) {
@@ -147,5 +146,4 @@ class _LoginPageState extends State<LoginPage> {
 
   _onClickRegister() {
     push(context, Cadastro(), replace: true);
-  }
-}
+  }}
