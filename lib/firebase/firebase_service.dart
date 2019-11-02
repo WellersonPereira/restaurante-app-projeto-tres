@@ -8,11 +8,8 @@ class FirebaseService {
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  Future<ApiResponse> cadastrar(
-      //Cadastra um usuário com login e senha.
-      String nome,
-      String email,
-      String senha) async {
+//Cadastra um usuário com login e senha.
+  Future<ApiResponse> cadastrar(String nome, String email, String senha) async {
     try {
       final FirebaseUser fUser = (await _auth.createUserWithEmailAndPassword(
               email: email, password: senha))
@@ -59,6 +56,7 @@ class FirebaseService {
       return ApiResponse.ok();
     } catch (error) {
       print("Firebase error $error");
+      return ApiResponse.error(msg: error);
       //return ApiResponse.error(msg: "Não foi possível fazer o login");
     }
   }

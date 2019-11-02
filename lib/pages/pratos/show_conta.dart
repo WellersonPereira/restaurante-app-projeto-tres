@@ -6,7 +6,6 @@ import 'package:projeto_restaurante/model/prato.dart';
 
 class ShowConta extends StatefulWidget {
   List<Conta> conta;
-
   ShowConta.conta(this.conta);
 
   @override
@@ -17,6 +16,16 @@ class _ShowContaState extends State<ShowConta> {
 
   @override
   Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Conta"),
+        centerTitle: true,
+      ),
+      body: _body(),
+    );
+  }
+
+  _body() {
     return Container(
       padding: EdgeInsets.all(16),
       child: ListView.builder(
@@ -36,7 +45,7 @@ class _ShowContaState extends State<ShowConta> {
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(fontSize: 25),
                   ),
-                  Text("R\$" + c.valor),
+                  Text(c.valor),
                   ButtonTheme.bar(
                     child: ButtonBar(
                       children: <Widget>[
@@ -44,11 +53,8 @@ class _ShowContaState extends State<ShowConta> {
                             child: const Text('Delete'),
                             onPressed: () => _delete(c)),
                         FlatButton(
-                          child: const Text('BUTTON'),
-                          onPressed: () {
-                            /* ... */
-                          },
-                        ),
+                            child: const Text('enviar'),
+                            onPressed: () =>_enviar(c))
                       ],
                     ),
                   ),
@@ -62,19 +68,25 @@ class _ShowContaState extends State<ShowConta> {
   }
 
   void _delete(Conta c) {
-    var db = Firestore.instance
-        .collection("Mesas")
-        .document(Mesa.id)
-        .collection("Pedidos");
-
-    Conta.quantidade --;
+    c.qtd --;
 
     Firestore.instance
         .collection("Mesas")
         .document(Mesa.id)
         .collection("Pedidos")
-        .document(Conta.pratoId)
-        .updateData({"quantidade": Conta.quantidade});
-    print(Conta.quantidade);
+        .document(c.pedidoId)
+        .updateData({'quantidade': c.qtd});
+    print(c.qtd);
   }
+
+  _enviar(Conta c){
+    Firestore.instance
+        .collection("Mesas")
+        .document(Mesa.id)
+        .collection("Pedidos")
+        .document(c.pedidoId)
+        .updateData({'status': "cozinha"});
+    print(c.pedidoId);
+  }
+
 }

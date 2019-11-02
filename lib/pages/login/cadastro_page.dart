@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:projeto_restaurante/bg_login.dart';
 import 'package:projeto_restaurante/firebase/firebase_service.dart';
-import 'package:projeto_restaurante/pages/cardapio.dart';
 import 'package:projeto_restaurante/pages/pratos/home.dart';
 import 'package:projeto_restaurante/utils/alert.dart';
 import 'package:projeto_restaurante/utils/nav.dart';
 import 'package:projeto_restaurante/widgets/login_button.dart';
 import 'package:projeto_restaurante/widgets/login_text.dart';
-
-import 'login_page.dart';
 
 class Cadastro extends StatefulWidget {
   @override
@@ -18,17 +16,15 @@ class _CadastroState extends State<Cadastro> {
   final _formKey = GlobalKey<FormState>();
   final _tName = TextEditingController();
   final _tEmail = TextEditingController();
-  final _tCpf = TextEditingController();
   final _tPassword = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text("Cadastro"),
+      body: Stack(
+        fit: StackFit.expand,
+        children: <Widget>[BgLogin(), _body()],
       ),
-      body: _body(),
     );
   }
 
@@ -39,40 +35,53 @@ class _CadastroState extends State<Cadastro> {
         padding: EdgeInsets.all(16),
         child: ListView(
           children: <Widget>[
+            Container(
+              padding: EdgeInsets.all(10),
+              child: Image.asset("assets/images/logo.png",
+                  width: 230, height: 230),
+            ),
+            Center(
+              child: Text(
+                "Cadastro",
+                style: TextStyle(fontSize: 25, color: Colors.red),
+              ),
+            ),
             //TODO: Implementar focus;
-            AppText(
-              "Nome",
-              "Informe seu nome",
-              controller: _tName,
-              validator: _validateName,
+            Container(
+              padding: EdgeInsets.only(top: 16),
+              child: AppText(
+                "Nome",
+                "Informe seu nome",
+                controller: _tName,
+                validator: _validateName,
+              ),
             ),
-            SizedBox(height: 10),
-            AppText(
-              "Email",
-              "Informe seu Email",
-              controller: _tEmail,
-              validator: _validateEmail,
+            Container(
+              padding: EdgeInsets.only(top: 16),
+              child: AppText(
+                "Email",
+                "Informe seu Email",
+                controller: _tEmail,
+                validator: _validateEmail,
+              ),
             ),
-            SizedBox(height: 10),
-            AppText(
-              "Senha",
-              "Informe sua senha",
-              controller: _tPassword,
-              validator: _validatePassword,
-              obscure: true,
+            Container(
+              padding: EdgeInsets.only(top: 16),
+              child: AppText(
+                "Senha",
+                "Informe sua senha",
+                controller: _tPassword,
+                validator: _validatePassword,
+                obscure: true,
+              ),
             ),
-            SizedBox(height: 10),
-            AppButton(
-              "Cadastrar",
-              onPressed: () {
-                _onClickRegister();
-              },
+            Container(
+              padding: EdgeInsets.only(top: 40),
+              child: AppButton(
+                "Cadastrar-se",
+                _onClickRegister,
+              ),
             ),
-            SizedBox(height: 10,),
-            AppButton(
-              "Cancelar", bntColor: Colors.white, textColor: Colors.green,
-              onPressed: _onClickCancel,
-            )
           ],
         ),
       ),
@@ -96,9 +105,11 @@ class _CadastroState extends State<Cadastro> {
 
     if (response.ok) {
       push(context, HomePage(), replace: true);
-    }
-    else
-      alert(context, response.msg,);
+    } else
+      alert(
+        context,
+        response.msg,
+      );
   }
 
   String _validateName(String text) {
@@ -123,9 +134,5 @@ class _CadastroState extends State<Cadastro> {
       return "A senha precisa ter pelo menos 6 caractéres";
     }
     return null;
-  }
-
-  _onClickCancel() {
-    push(context, LoginPage(), replace: true);
   }
 }

@@ -1,25 +1,42 @@
 import 'package:flutter/material.dart';
 
 class AppButton extends StatelessWidget {
-  String text;
-  Function onPressed;
-  Color bntColor;
-  Color textColor;
+  final String text;
+  final VoidCallback callback;
+  final bool showProgress;
 
-  AppButton(this.text, {this.onPressed, this.bntColor = Colors.green, this.textColor = Colors.white});
+  AppButton(this.text, this.callback, {this.showProgress = false});
 
   @override
   Widget build(BuildContext context) {
+    final backgroundColor1 = Colors.orange;
+    final backgroundColor2 = Colors.red;
+    final textColor = Colors.white;
+
     return Container(
-      height: 50,
-      width: 180,
-      child: RaisedButton(
-        color: bntColor,
-        child: Text(
-          text,
-          style: TextStyle(fontSize: 22, color: textColor),
-        ),
-        onPressed: onPressed,
+      width: 200,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(22),
+          gradient: LinearGradient(
+            colors: [backgroundColor1, backgroundColor2],
+            begin: FractionalOffset.topCenter,
+            end: FractionalOffset.bottomCenter,
+          )),
+      child: FlatButton(
+        child: showProgress
+            ? Center(
+                child: CircularProgressIndicator(
+                  valueColor: new AlwaysStoppedAnimation<Color>(textColor),
+                ),
+              )
+            : Text(
+                text,
+                style: TextStyle(
+                  fontSize: 18,
+                  color: textColor,
+                ),
+              ),
+        onPressed: callback,
       ),
     );
   }

@@ -1,32 +1,26 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:projeto_restaurante/model/conta.dart';
-import 'package:projeto_restaurante/model/mesa.dart';
-import 'package:projeto_restaurante/pages/pratos/show_conta.dart';
+import 'package:projeto_restaurante/pages/pratos/show_pedidos.dart';
 
-class QueryConta extends StatefulWidget {
+class QueryPedidos extends StatefulWidget {
   @override
-  _QueryContaState createState() => _QueryContaState();
+  _QueryPedidosState createState() => _QueryPedidosState();
 }
 
-class _QueryContaState extends State<QueryConta> {
-  //var db = Firestore.instance.collectionGroup("Pedidos");
-
-  var db = Firestore.instance
-      .collection("Mesas")
-      .document(Mesa.id)
-      .collection("Pedidos");
+class _QueryPedidosState extends State<QueryPedidos> {
+  var db = Firestore.instance.collectionGroup("Pedidos");
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: db.where("quantidade", isGreaterThan: 0).where('status', isEqualTo: "pedindo").snapshots(),
+      stream: db.where("status", isEqualTo: "cozinha").snapshots(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           final List<Conta> contas = snapshot.data.documents.map((document) {
             return Conta.fromJson(document.data);
           }).toList();
-          return ShowConta.conta(contas);
+          return ShowPedidos.conta(contas);
         } else if (snapshot.hasError) return Text('Error: ${snapshot.error}');
         {
           return Center(

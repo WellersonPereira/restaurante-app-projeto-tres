@@ -5,8 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:projeto_restaurante/drawer_list.dart';
 import 'package:projeto_restaurante/model/mesa.dart';
-import 'package:projeto_restaurante/model/usuario.dart';
-import 'package:projeto_restaurante/pages/cardapio.dart';
+import 'package:projeto_restaurante/pages/pratos/cardapio.dart';
 import 'package:projeto_restaurante/utils/nav.dart';
 
 class HomePage extends StatefulWidget {
@@ -17,6 +16,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   String _barcode = "";
   FirebaseUser currentUser;
+  bool admin = false;
 
   @override
   void initState() {
@@ -24,9 +24,10 @@ class _HomePageState extends State<HomePage> {
     _loadCurrentUser();
   }
 
-  _loadCurrentUser(){
+  _loadCurrentUser() {
     FirebaseAuth.instance.currentUser().then((FirebaseUser user) {
-      setState(() { // call setState to rebuild the view
+      setState(() {
+        // call setState to rebuild the view
         this.currentUser = user;
       });
     });
@@ -57,14 +58,18 @@ class _HomePageState extends State<HomePage> {
             }
           },
         ),
-        drawer: DrawerList());
+        drawer: DrawerList(
+          admin: admin,
+        ));
   }
 
   //Verifica o papel do usuário.
   checkRole(DocumentSnapshot snapshot) {
     if (snapshot.data['role'] == 'admin') {
+      admin = true;
       return adminPage(snapshot);
     } else {
+      admin = false;
       return userPage(snapshot);
     }
   }
@@ -105,8 +110,13 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Center adminPage(DocumentSnapshot snapshot) {
-    return Center(child: Text("Teste"));
+  adminPage(DocumentSnapshot snapshot) {
+    return Container(
+      child: FlatButton(
+        child: Text("cardapio"),
+        onPressed: () => push(context, Cardapio(admin: true,)),
+      ),
+    );
   }
 
   Future scan() async {
@@ -134,7 +144,7 @@ class _HomePageState extends State<HomePage> {
           "ocupada": true
         });
 
-        push(context, Cardapio(), replace: true);
+        push(context, Cardapio(admin: false,), replace: true);
       } else {
         this._barcode = "Qr code inválido";
       }

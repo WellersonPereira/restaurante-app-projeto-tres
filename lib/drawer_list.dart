@@ -1,22 +1,36 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart' as prefix0;
 import 'package:projeto_restaurante/Model/usuario.dart';
 import 'package:projeto_restaurante/firebase/firebase_service.dart';
 import 'package:projeto_restaurante/pages/login/login_page.dart';
 import 'package:projeto_restaurante/pages/pratos/query_conta.dart';
-import 'package:projeto_restaurante/pages/pratos/show_conta.dart';
+import 'package:projeto_restaurante/pages/pratos/query_pedidos.dart';
 import 'package:projeto_restaurante/utils/nav.dart';
 
-class DrawerList extends StatelessWidget {
+class DrawerList extends StatefulWidget {
+  bool admin;
+  DrawerList({this.admin});
+
+  @override
+  _DrawerListState createState() => _DrawerListState();
+}
+
+class _DrawerListState extends State<DrawerList> {
   UserAccountsDrawerHeader _header(FirebaseUser user) {
     return UserAccountsDrawerHeader(
       accountName: Text(user.displayName ?? ""),
       accountEmail: Text(user.email),
-      currentAccountPicture: user.photoUrl != null ? CircleAvatar( backgroundImage: NetworkImage(user.photoUrl),
-      )
+      currentAccountPicture: user.photoUrl != null
+          ? CircleAvatar(
+              backgroundImage: NetworkImage(user.photoUrl),
+            )
           : FlutterLogo(),
-      );
+    );
+
+  }
+@override
+  void initState() {
+    super.initState();
   }
 
   @override
@@ -35,12 +49,11 @@ class DrawerList extends StatelessWidget {
               },
             ),
             ListTile(
-              leading: Icon(Icons.attach_money),
-              title: Text("Conta"),
-              subtitle: Text("mais informações..."),
-              trailing: Icon(Icons.arrow_forward),
-              onTap: () => push(context, QueryConta())
-            ),
+                leading: Icon(Icons.attach_money),
+                title: Text("Conta"),
+                subtitle: Text("mais informações..."),
+                trailing: Icon(Icons.arrow_forward),
+                onTap: () => push(context, QueryConta())),
             ListTile(
               leading: Icon(Icons.help),
               title: Text("Ajuda"),
@@ -56,11 +69,25 @@ class DrawerList extends StatelessWidget {
               title: Text("Logout"),
               trailing: Icon(Icons.arrow_forward),
               onTap: () => _onClickLogout(context),
-            )
+            ),
+            _relatorio(context),
           ],
         ),
       ),
     );
+  }
+
+  _relatorio(context) {
+    if (widget.admin == true) {
+      return ListTile(
+        leading: Icon(Icons.exit_to_app),
+        title: Text("Pedidos"),
+        trailing: Icon(Icons.apps),
+        onTap: () => push(context, QueryPedidos()));
+    }
+    else{
+      return ListTile();
+    }
   }
 
   _onClickLogout(BuildContext context) {

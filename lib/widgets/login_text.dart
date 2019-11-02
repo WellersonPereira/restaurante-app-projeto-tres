@@ -24,7 +24,7 @@ class AppText extends StatelessWidget {
       validator: validator,
       style: TextStyle(
         fontSize: 25,
-        color: Colors.green,
+        color: Color.fromRGBO(0, 51, 0, 10),
       ),
       decoration: InputDecoration(
         border: OutlineInputBorder(
