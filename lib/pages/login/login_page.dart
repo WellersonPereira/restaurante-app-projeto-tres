@@ -20,7 +20,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
-  final _tEmail = TextEditingController();
+    final _tEmail = TextEditingController();
   final _tPassWord = TextEditingController();
 
   @override
@@ -134,10 +134,7 @@ class _LoginPageState extends State<LoginPage> {
     if (response.ok) {
       push(context, HomePage(), replace: true);
     } else
-      alert(
-        context,
-        response.msg
-      );
+      alert(context, response.msg);
   }
 
   String _validatorLogin(String text) {

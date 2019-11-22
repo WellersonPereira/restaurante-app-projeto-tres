@@ -3,9 +3,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:projeto_restaurante/Model/prato.dart';
+import 'package:projeto_restaurante/bg_login.dart';
 import 'package:projeto_restaurante/drawer_list.dart';
 import 'package:projeto_restaurante/model/conta.dart';
 import 'package:projeto_restaurante/model/mesa.dart';
+import 'package:projeto_restaurante/widgets/login_button.dart';
+import 'package:toast/toast.dart';
 
 class PratoPage extends StatefulWidget {
   Prato prato = Prato();
@@ -20,6 +23,8 @@ class _PratoPageState extends State<PratoPage> {
   FirebaseUser currentUser;
   bool admin;
   bool switchOn;
+  final _formKey = GlobalKey<FormState>();
+  final _desc = TextEditingController();
 
   @override
   void initState() {
@@ -51,27 +56,37 @@ class _PratoPageState extends State<PratoPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(currentUser.displayName),
+        title: Text("Restaurante"),
         centerTitle: true,
       ),
-      body: StreamBuilder<DocumentSnapshot>(
-        stream: Firestore.instance
-            .collection("Clientes")
-            .document(currentUser.uid)
-            .snapshots(),
-        builder:
-            (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-          if (snapshot.hasError) {
-            return Text("Error: ${snapshot.error}");
-          }
-          switch (snapshot.connectionState) {
-            case ConnectionState.waiting:
-              return Text("Carregando...");
-            default:
-              return checkRole(snapshot.data);
-          }
-        },
+      body: Stack(
+        fit: StackFit.expand,
+        children: <Widget>[
+          BgLogin(),
+          StreamBuilder<DocumentSnapshot>(
+            stream: Firestore.instance
+                .collection("Clientes")
+                .document(currentUser.uid)
+                .snapshots(),
+            builder: (BuildContext context,
+                AsyncSnapshot<DocumentSnapshot> snapshot) {
+              if (snapshot.hasError) {
+                return Text("Error: ${snapshot.error}");
+              }
+              switch (snapshot.connectionState) {
+                case ConnectionState.waiting:
+                  return Text("Carregando...");
+                default:
+                  return checkRole(snapshot.data);
+              }
+            },
+          )
+        ],
       ),
+//      floatingActionButton: FloatingActionButton(
+//        onPressed: () => _addPrato(prato),
+//        child: Icon(Icons.add),
+//      ),
       drawer: DrawerList(
         admin: admin,
       ),
@@ -89,6 +104,7 @@ class _PratoPageState extends State<PratoPage> {
     }
   }
 
+  //--------------------- If Admin -------------------
   _bodyAdmin() {
     print(prato.id);
     return Container(
@@ -132,28 +148,52 @@ class _PratoPageState extends State<PratoPage> {
     print(prato.disponivel);
   }
 
+  // ----------------------------------If user --------------------------------
   _body() {
     return Container(
+      key: _formKey,
       padding: EdgeInsets.all(16),
       child: ListView(
         children: <Widget>[
           Image.network(prato.urlFoto),
-          Text(prato.descricao),
-          FlatButton(
-              child: const Text("Quero"), onPressed: () => _addPrato(prato))
+          Container(
+            child: Text(
+              "Descrição do prato: \n" + prato.descricao,
+              style: TextStyle(fontSize: 20, fontStyle: FontStyle.italic),
+            ),
+            padding: EdgeInsets.all(15),
+          ),
+          Container(
+            padding: EdgeInsets.all(20),
+            child: TextFormField(
+              decoration: InputDecoration(hintText: "Ex.: Não quero queijo"),
+              controller: _desc,
+            ),
+          ),
+          Container(
+            child: Row(
+              children: <Widget>[
+                AppButton("Add", () => _addPrato(prato), largura: 160),
+                //TODO: implementar voltar
+                AppButton("Voltar", () => {}, largura: 160)
+              ],
+            ),
+          ),
         ],
       ),
     );
   }
 
-  //TODO: Set Id.
   _addPrato(Prato prato) {
     Conta c = Conta();
+    c.desc = _desc.text;
     var db = Firestore.instance
         .collection("Mesas")
         .document(Mesa.id)
         .collection("Pedidos")
         .document(prato.id.toString());
+
+    double valor = Prato.qtd.toDouble() * double.parse(prato.valor);
 
     try {
       //Prato.qtd = 1;
@@ -161,6 +201,7 @@ class _PratoPageState extends State<PratoPage> {
         "pedidoId": prato.id,
         "prato": prato.nome,
         "valor": prato.valor,
+        "descricao": c.desc,
         "quantidade": Prato.qtd,
         "status": "pedindo"
       });
@@ -170,16 +211,21 @@ class _PratoPageState extends State<PratoPage> {
         "pedidoId": prato.id,
         "prato": prato.nome,
         "valor": prato.valor,
+        "descricao": c.desc,
         "quantidade": Prato.qtd,
         "status": "pedindo"
       });
-      c.total = double.parse(prato.valor) * Prato.qtd;
+      double total = double.parse(prato.valor) * Prato.qtd;
+      c.total = total + c.total.toDouble();
       print(c.total);
       Firestore.instance
           .collection("Mesas")
-
           .document(Mesa.id)
           .updateData({"total": c.total});
     }
+    Toast.show("Prato enviado para lista de pedidos", context,
+        duration: Toast.LENGTH_LONG,
+        backgroundColor: Colors.white,
+        textColor: Colors.black);
   }
 }

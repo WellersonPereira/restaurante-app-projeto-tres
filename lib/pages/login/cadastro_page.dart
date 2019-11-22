@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:projeto_restaurante/bg_login.dart';
 import 'package:projeto_restaurante/firebase/firebase_service.dart';
+import 'package:projeto_restaurante/pages/login/login_page.dart';
 import 'package:projeto_restaurante/pages/pratos/home.dart';
 import 'package:projeto_restaurante/utils/alert.dart';
 import 'package:projeto_restaurante/utils/nav.dart';
 import 'package:projeto_restaurante/widgets/login_button.dart';
 import 'package:projeto_restaurante/widgets/login_text.dart';
+import 'package:toast/toast.dart';
 
 class Cadastro extends StatefulWidget {
   @override
@@ -98,13 +100,12 @@ class _CadastroState extends State<Cadastro> {
     String email = _tEmail.text;
     String password = _tPassword.text;
 
-    print("Cadastrado Sr.$name $email");
-
     final service = FirebaseService();
     final response = await service.cadastrar(name, email, password);
 
     if (response.ok) {
-      push(context, HomePage(), replace: true);
+      push(context, LoginPage(), replace: true);
+      Toast.show("Usuário criado com sucesso", context, duration: Toast.LENGTH_LONG);
     } else
       alert(
         context,

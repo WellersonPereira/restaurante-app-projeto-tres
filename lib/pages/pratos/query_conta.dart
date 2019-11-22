@@ -10,7 +10,6 @@ class QueryConta extends StatefulWidget {
 }
 
 class _QueryContaState extends State<QueryConta> {
-  //var db = Firestore.instance.collectionGroup("Pedidos");
 
   var db = Firestore.instance
       .collection("Mesas")

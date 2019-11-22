@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:projeto_restaurante/bg_login.dart';
 import 'package:projeto_restaurante/drawer_list.dart';
 import 'package:projeto_restaurante/model/mesa.dart';
 import 'package:projeto_restaurante/pages/pratos/cardapio.dart';
@@ -37,26 +38,29 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(currentUser.displayName),
+          title: Text("Restaurante"),
           centerTitle: true,
         ),
-        body: StreamBuilder<DocumentSnapshot>(
-          stream: Firestore.instance
-              .collection("Clientes")
-              .document(currentUser.uid)
-              .snapshots(),
-          builder:
-              (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-            if (snapshot.hasError) {
-              return Text("Error: ${snapshot.error}");
-            }
-            switch (snapshot.connectionState) {
-              case ConnectionState.waiting:
-                return Text("Carregando...");
-              default:
-                return checkRole(snapshot.data);
-            }
-          },
+        body: Stack(
+          fit: StackFit.expand,
+          children: <Widget>[BgLogin(), StreamBuilder<DocumentSnapshot>(
+            stream: Firestore.instance
+                .collection("Clientes")
+                .document(currentUser.uid)
+                .snapshots(),
+            builder:
+                (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+              if (snapshot.hasError) {
+                return Text("Error: ${snapshot.error}");
+              }
+              switch (snapshot.connectionState) {
+                case ConnectionState.waiting:
+                  return Text("Carregando...");
+                default:
+                  return checkRole(snapshot.data);
+              }
+            },
+          ),],
         ),
         drawer: DrawerList(
           admin: admin,
@@ -81,11 +85,11 @@ class _HomePageState extends State<HomePage> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Image.asset(
-            'assets/barcode.png',
-            height: 150,
+            'assets/images/QRCodeScanning.gif',
+            height: 250,
           ),
           SizedBox(
-            height: 20,
+            height: 100,
           ),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 80, vertical: 10.0),

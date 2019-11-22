@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:projeto_restaurante/Model/usuario.dart';
 import 'package:projeto_restaurante/firebase/firebase_service.dart';
 import 'package:projeto_restaurante/pages/login/login_page.dart';
-import 'package:projeto_restaurante/pages/pratos/query_conta.dart';
 import 'package:projeto_restaurante/pages/pratos/query_pedidos.dart';
 import 'package:projeto_restaurante/utils/nav.dart';
 
@@ -53,7 +52,7 @@ class _DrawerListState extends State<DrawerList> {
                 title: Text("Conta"),
                 subtitle: Text("mais informações..."),
                 trailing: Icon(Icons.arrow_forward),
-                onTap: () => push(context, QueryConta())),
+                onTap: () =>{} /*push(context, QueryConta())*/),
             ListTile(
               leading: Icon(Icons.help),
               title: Text("Ajuda"),

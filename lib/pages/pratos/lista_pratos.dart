@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:projeto_restaurante/Model/prato.dart';
 import 'package:projeto_restaurante/pages/pratos/prato_page.dart';
@@ -5,6 +6,7 @@ import 'package:projeto_restaurante/utils/nav.dart';
 
 class ListaPrato extends StatefulWidget {
   final List<Prato> pratos;
+
   ListaPrato.prato(this.pratos);
 
   @override
@@ -21,6 +23,7 @@ class _ListaPratoState extends State<ListaPrato> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: EdgeInsets.all(10),
       child: ListView.builder(
         itemCount: widget.pratos.length,
         itemBuilder: (context, index) {
@@ -28,33 +31,26 @@ class _ListaPratoState extends State<ListaPrato> {
           return GestureDetector(
             onTap: () => _onClickPrato(context, p),
             child: Card(
-              child: Container(
-                padding: EdgeInsets.all(10),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Image.network(
-                      p.urlFoto,
-                    ),
-                    Text(
-                      p.nome,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(fontSize: 20),
-                    ),
-                    Container(
-                      color: Colors.grey,
-                      child: Row(
-                        children: <Widget>[
-                          Text(
-                            "R\$" + p.valor,
-                            textAlign: TextAlign.left,
-                          )
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
+              color: Color.fromRGBO(204, 255, 51, 85),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  FadeInImage.assetNetwork(
+                    placeholder: '',
+                    image: p.urlFoto,
+                    fit: BoxFit.cover,
+                    width: 125.0,
+                    height: 125.0,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      //TODO:Fix layout
+                      Text(p.nome, style: TextStyle(fontSize: 30),),
+                      Text("R\$ " + p.valor, style: TextStyle(fontSize: 18,),)
+                    ],
+                  ),
+                ],
               ),
             ),
           );
@@ -66,5 +62,4 @@ class _ListaPratoState extends State<ListaPrato> {
   _onClickPrato(BuildContext context, Prato p) {
     push(context, PratoPage(prato: p));
   }
-
 }

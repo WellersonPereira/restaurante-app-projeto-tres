@@ -4,8 +4,9 @@ class AppButton extends StatelessWidget {
   final String text;
   final VoidCallback callback;
   final bool showProgress;
+  final double largura;
 
-  AppButton(this.text, this.callback, {this.showProgress = false});
+  AppButton(this.text, this.callback, {this.showProgress = false, this.largura = 200});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +15,7 @@ class AppButton extends StatelessWidget {
     final textColor = Colors.white;
 
     return Container(
-      width: 200,
+      width: largura,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(22),
           gradient: LinearGradient(

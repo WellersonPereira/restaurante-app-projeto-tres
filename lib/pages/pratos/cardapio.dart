@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:projeto_restaurante/bg_login.dart';
 import 'package:projeto_restaurante/drawer_list.dart';
 import 'package:projeto_restaurante/pages/pratos/admin_query_pratos.dart';
 import 'package:projeto_restaurante/pages/pratos/query_conta.dart';
@@ -40,11 +41,15 @@ class _CardapioState extends State<Cardapio> {
             ],
           ),
         ),
-        body: _ifAdmin(),
+        body: Stack(
+          fit: StackFit.expand,
+          children: <Widget>[BgLogin(),_ifAdmin()],
+        ),
         drawer: DrawerList(),
-        floatingActionButton: FloatingActionButton(
+        floatingActionButton: FloatingActionButton.extended(
+          icon: Icon(Icons.shopping_basket),
+          label: Text("Sacola"),
           onPressed: () => push(context, QueryConta()),
-          child: Icon(Icons.account_balance_wallet),
         ),
       ),
     );

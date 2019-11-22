@@ -33,9 +33,9 @@ class FirebaseService {
     }
   }
 
+  // Login no Firebase com email e senha.
   Future<ApiResponse> login(String email, String senha) async {
     try {
-      // Login no Firebase com email e senha.
       AuthResult result =
           await _auth.signInWithEmailAndPassword(email: email, password: senha);
       final FirebaseUser fuser = result.user;
@@ -56,14 +56,13 @@ class FirebaseService {
       return ApiResponse.ok();
     } catch (error) {
       print("Firebase error $error");
-      return ApiResponse.error(msg: error);
-      //return ApiResponse.error(msg: "Não foi possível fazer o login");
+      return ApiResponse.error(msg: error.toString());
     }
   }
 
+  // Login com o Google
   Future<ApiResponse> loginGoogle() async {
     try {
-      // Login com o Google
       final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
       final GoogleSignInAuthentication googleAuth =
           await googleUser.authentication;

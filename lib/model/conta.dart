@@ -6,13 +6,15 @@ class Conta {
   int qtd;
   String valor;
   String status;
-  double total = 0;
+  double total;
+  String mesa;
+  String desc;
 
   static setQuantidade(int quantidade) {
     Conta.quantidade = quantidade;
   }
 
-  Conta({this.id, this.prato, this.valor, this.qtd, this.status, this.pedidoId});
+  Conta({this.id, this.prato, this.valor, this.qtd, this.status, this.pedidoId, this.mesa, this.desc, this.total});
 
   Conta.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -22,6 +24,8 @@ class Conta {
     status = json['status'];
     pedidoId = json['pedidoId'];
     total = json['total'];
+    mesa = json['mesa'];
+    desc = json['descricao'];
   }
 
   Map<String, dynamic> toJson() {
@@ -33,6 +37,8 @@ class Conta {
     data['status'] = this.status;
     data['pedidoId'] = this.pedidoId;
     data['total'] = this.total;
+    data['mesa'] = this.mesa;
+    data['descricao'] = this.mesa;
     return data;
   }
 }
