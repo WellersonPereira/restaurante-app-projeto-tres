@@ -94,8 +94,8 @@ class _HomePageState extends State<HomePage> {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 80, vertical: 10.0),
             child: RaisedButton(
-              color: Colors.amber,
-              textColor: Colors.black,
+              color: Colors.indigo,
+              textColor: Colors.white,
               splashColor: Colors.blueGrey,
               onPressed: scan,
               child: const Text('Scannear QrCode'),

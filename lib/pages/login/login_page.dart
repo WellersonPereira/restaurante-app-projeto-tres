@@ -33,7 +33,7 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       body: Stack(
         fit: StackFit.expand,
-        children: <Widget>[BgLogin(), _body()],
+        children: <Widget>[BgLogin(),_body()],
       ),
     );
   }
@@ -47,7 +47,7 @@ class _LoginPageState extends State<LoginPage> {
           children: <Widget>[
             Container(
               padding: EdgeInsets.all(10),
-              child: Image.asset("assets/images/logo.png",
+              child: Image.asset("assets/images/logo5.png",
                   width: 230, height: 230),
             ),
             Container(

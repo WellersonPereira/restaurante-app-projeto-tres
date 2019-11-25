@@ -30,7 +30,8 @@ class _ListaPratoState extends State<ListaPrato> {
           return GestureDetector(
             onTap: () => _onClickPrato(context, p),
             child: Card(
-              color: Color.fromRGBO(204, 255, 51, 85),
+              elevation: 0,
+              color: Colors.transparent,
               child: Column(
                 children: <Widget>[
                   Row(
@@ -49,7 +50,9 @@ class _ListaPratoState extends State<ListaPrato> {
                           Text(
                             p.nome,
                             style: TextStyle(
-                                fontSize: 25, fontWeight: FontWeight.bold),
+                                color: Colors.indigo,
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold),
                           ),
                         ],
                       ),
@@ -60,7 +63,6 @@ class _ListaPratoState extends State<ListaPrato> {
                           children: <Widget>[
                             Padding(
                               padding: EdgeInsets.all(5),
-                              //EdgeInsets.fromLTRB(12.0, 12.0, 12.0, 6.0),
                               child: Text(""),
                             ),
                             Padding(
@@ -68,6 +70,7 @@ class _ListaPratoState extends State<ListaPrato> {
                               child: Text(
                                 "R\$ " + p.valor,
                                 style: TextStyle(
+                                  color: Colors.indigoAccent,
                                   fontSize: 20,
                                 ),
                               ),
@@ -77,6 +80,11 @@ class _ListaPratoState extends State<ListaPrato> {
                       ),
                     ],
                   ),
+                  Divider(
+                    thickness: 0,
+                    height: 4.0,
+                    color: Colors.deepPurple,
+                  )
                 ],
               ),
             ),

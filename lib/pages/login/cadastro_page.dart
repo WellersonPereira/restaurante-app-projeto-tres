@@ -39,13 +39,13 @@ class _CadastroState extends State<Cadastro> {
           children: <Widget>[
             Container(
               padding: EdgeInsets.all(10),
-              child: Image.asset("assets/images/logo.png",
+              child: Image.asset("assets/images/logo5.png",
                   width: 230, height: 230),
             ),
             Center(
               child: Text(
                 "Cadastro",
-                style: TextStyle(fontSize: 25, color: Colors.red),
+                style: TextStyle(fontSize: 25, color: Colors.indigo),
               ),
             ),
             Container(

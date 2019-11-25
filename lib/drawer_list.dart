@@ -8,6 +8,7 @@ import 'package:projeto_restaurante/utils/nav.dart';
 
 class DrawerList extends StatefulWidget {
   bool admin;
+
   DrawerList({this.admin});
 
   @override
@@ -25,9 +26,9 @@ class _DrawerListState extends State<DrawerList> {
             )
           : Image.asset('assets/images/user.png'),
     );
-
   }
-@override
+
+  @override
   void initState() {
     super.initState();
   }
@@ -47,12 +48,6 @@ class _DrawerListState extends State<DrawerList> {
                 return user != null ? _header(user) : Container();
               },
             ),
-            ListTile(
-                leading: Icon(Icons.attach_money),
-                title: Text("Conta"),
-                subtitle: Text("mais informações..."),
-                trailing: Icon(Icons.arrow_forward),
-                onTap: () =>{} /*push(context, QueryConta())*/),
             ListTile(
               leading: Icon(Icons.help),
               title: Text("Ajuda"),
@@ -79,12 +74,11 @@ class _DrawerListState extends State<DrawerList> {
   _relatorio(context) {
     if (widget.admin == true) {
       return ListTile(
-        leading: Icon(Icons.exit_to_app),
-        title: Text("Pedidos"),
-        trailing: Icon(Icons.apps),
-        onTap: () => push(context, QueryPedidos()));
-    }
-    else{
+          leading: Icon(Icons.remove_red_eye),
+          title: Text("Pedidos"),
+          trailing: Icon(Icons.arrow_forward),
+          onTap: () => push(context, QueryPedidos()));
+    } else {
       return ListTile();
     }
   }

@@ -28,6 +28,7 @@ class _PratoPageState extends State<PratoPage> {
 
   @override
   void initState() {
+    Prato.qtd = 0;
     super.initState();
     _loadCurrentUser();
     _verificaSwitch();
@@ -62,7 +63,7 @@ class _PratoPageState extends State<PratoPage> {
       body: Stack(
         fit: StackFit.expand,
         children: <Widget>[
-          BgLogin(),
+//          BgLogin(),
           StreamBuilder<DocumentSnapshot>(
             stream: Firestore.instance
                 .collection("Clientes")
@@ -107,8 +108,8 @@ class _PratoPageState extends State<PratoPage> {
       padding: EdgeInsets.all(16),
       child: ListView(
         children: <Widget>[
-          Image.network(prato.urlFoto),
-          Text(prato.descricao),
+          Image.network(prato.urlFoto, width: 250, height: 250,),
+          Container(padding: EdgeInsets.fromLTRB(10,20,10,15), child: Text(prato.descricao, style: TextStyle(fontSize: 25),), width: 100,),
           Row(
             children: <Widget>[
               Switch(
@@ -151,7 +152,7 @@ class _PratoPageState extends State<PratoPage> {
       padding: EdgeInsets.all(16),
       child: ListView(
         children: <Widget>[
-          Image.network(prato.urlFoto),
+          Image.network(prato.urlFoto ,width: 250, height: 250,),
           Container(
             child: Text(
               "Descrição do prato: \n" + prato.descricao,

@@ -44,7 +44,7 @@ class _CardapioState extends State<Cardapio> {
           ),
           body: Stack(
             fit: StackFit.expand,
-            children: <Widget>[BgLogin(), _ifAdmin()],
+            children: <Widget>[/*BgLogin(),*/_ifAdmin()],
           ),
           drawer: DrawerList(
             admin: widget.admin,

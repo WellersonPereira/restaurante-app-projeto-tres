@@ -23,16 +23,16 @@ class AppText extends StatelessWidget {
       validator: validator,
       style: TextStyle(
         fontSize: 25,
-        color: Color.fromRGBO(0, 51, 0, 10),
+        color: Colors.white //fromRGBO(0, 51, 0, 10),
       ),
       decoration: InputDecoration(
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(16),
         ),
         labelText: label,
-        labelStyle: TextStyle(fontSize: 25, color: Colors.blueGrey),
+        labelStyle: TextStyle(fontSize: 25, color: Colors.white),
         hintText: hint,
-        hintStyle: TextStyle(fontSize: 16),
+        hintStyle: TextStyle(fontSize: 16, color: Colors.white),
       ),
     );
   }

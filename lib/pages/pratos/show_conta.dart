@@ -23,7 +23,7 @@ class _ShowContaState extends State<ShowConta> {
       ),
       body: Stack(
         fit: StackFit.expand,
-        children: <Widget>[BgLogin(), _body()],
+        children: <Widget>[/*BgLogin(),*/ _body()],
       ),
     );
   }
@@ -48,7 +48,7 @@ class _ShowContaState extends State<ShowConta> {
                             const EdgeInsets.fromLTRB(12.0, 12.0, 12.0, 6.0),
                         child: Text(
                           c.prato,
-                          style: TextStyle(
+                          style: TextStyle(color: Colors.indigoAccent,
                               fontSize: 22.0, fontWeight: FontWeight.bold),
                         ),
                       ),
@@ -57,7 +57,7 @@ class _ShowContaState extends State<ShowConta> {
                             const EdgeInsets.fromLTRB(12.0, 6.0, 12.0, 12.0),
                         child: Text(
                           "Unid R\$ " + c.valor,
-                          style: TextStyle(fontSize: 18.0),
+                          style: TextStyle(fontSize: 15.0),
                         ),
                       ),
                     ],
@@ -69,14 +69,13 @@ class _ShowContaState extends State<ShowConta> {
                       children: <Widget>[
                         Text(
                           "Qtd: " + c.qtd.toString(),
-//                          "Unidade R\$ " + c.valor,
-                          style: TextStyle(color: Colors.grey),
+                          style: TextStyle(fontSize: 13 ,color: Colors.grey),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
                             "R\$ ${_valor(c)}",
-                            style: TextStyle(fontSize: 20),
+                            style: TextStyle(fontSize: 20, color: Colors.indigo),
                           ),
                         ),
                       ],
@@ -84,7 +83,8 @@ class _ShowContaState extends State<ShowConta> {
                   ),
                 ],
               ),
-              Text("Status: " + c.status),
+              _mudarTextoo(c),
+//              Text("Status: " + c.status, style: TextStyle(color: Colors.blue),),
               ButtonTheme.bar(
                 child: verificaStatus(c),
               ),
@@ -97,6 +97,15 @@ class _ShowContaState extends State<ShowConta> {
         },
       ),
     );
+  }
+
+  _mudarTextoo(Conta c) {
+    if(c.status == "Aguardando confirmação")
+      {return Text("Status: " + c.status, style: TextStyle(color: Colors.red),);
+      }
+    else{
+      return Text("Status: " + c.status, style: TextStyle(color: Colors.blue),);
+    }
   }
 
   verificaStatus(Conta c) {
@@ -166,4 +175,6 @@ class _ShowContaState extends State<ShowConta> {
     c.total = valorTotal;
     return valorTotal;
   }
+
+
 }

@@ -24,7 +24,7 @@ class _ShowPedidosState extends State<ShowPedidos> {
       ),
       body: Stack(
         fit: StackFit.expand,
-        children: <Widget>[BgLogin(), _body()],
+        children: <Widget>[/*BgLogin(),*/ _body()],
       ),
     );
   }
@@ -38,7 +38,8 @@ class _ShowPedidosState extends State<ShowPedidos> {
           Conta c = widget.conta[index];
           return GestureDetector(
             child: Card(
-              color: Color.fromRGBO(204, 255, 51, 85),
+              elevation: 0,
+              color: Colors.transparent,
               child: Container(
                 padding: EdgeInsets.all(10),
                 child: Column(
@@ -62,6 +63,11 @@ class _ShowPedidosState extends State<ShowPedidos> {
                               onPressed: () => _detalhes(c))
                         ],
                       ),
+                    ),
+                    Divider(
+                      thickness: 0,
+                      height: 4.0,
+                      color: Colors.deepPurple,
                     ),
                   ],
                 ),
@@ -89,8 +95,9 @@ class _ShowPedidosState extends State<ShowPedidos> {
     alert(
         context,
         "Prato: ${c.prato} \n\n"
-        "Quantidade: ${c.qtd}\n\n"
-        "Detalhes: ${c.desc}\n\n"
-        "Mesa: " + c.mesa.substring(0,2));
+                "Quantidade: ${c.qtd}\n\n"
+                "Detalhes: ${c.desc}\n\n"
+                "Mesa: " +
+            c.mesa.substring(0, 2));
   }
 }
