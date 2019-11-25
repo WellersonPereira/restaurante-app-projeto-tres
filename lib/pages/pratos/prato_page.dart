@@ -83,10 +83,6 @@ class _PratoPageState extends State<PratoPage> {
           )
         ],
       ),
-//      floatingActionButton: FloatingActionButton(
-//        onPressed: () => _addPrato(prato),
-//        child: Icon(Icons.add),
-//      ),
       drawer: DrawerList(
         admin: admin,
       ),
@@ -166,18 +162,21 @@ class _PratoPageState extends State<PratoPage> {
           Container(
             padding: EdgeInsets.all(20),
             child: TextFormField(
-              decoration: InputDecoration(hintText: "Ex.: Não quero queijo"),
+              decoration: InputDecoration(hintText: "Ex.: Tirar o queijo "),
               controller: _desc,
             ),
           ),
-          Container(
-            child: Row(
-              children: <Widget>[
-                AppButton("Add", () => _addPrato(prato), largura: 160),
-                //TODO: implementar voltar
-                AppButton("Voltar", () => {}, largura: 160)
-              ],
-            ),
+          Column(
+            children: <Widget>[
+              Row(
+                children: <Widget>[
+                  AppButton("Add", () => _addPrato(prato), largura: 160),
+                  AppButton("Voltar", () {
+                    Navigator.pop(context);
+                  }, largura: 160)
+                ],
+              ),
+            ],
           ),
         ],
       ),
@@ -187,13 +186,14 @@ class _PratoPageState extends State<PratoPage> {
   _addPrato(Prato prato) {
     Conta c = Conta();
     c.desc = _desc.text;
+    c.mesa = Mesa.id;
     var db = Firestore.instance
         .collection("Mesas")
-        .document(Mesa.id)
+        .document(c.mesa)
         .collection("Pedidos")
         .document(prato.id.toString());
 
-    double valor = Prato.qtd.toDouble() * double.parse(prato.valor);
+    //double valor = Prato.qtd * double.parse(prato.valor);
 
     try {
       //Prato.qtd = 1;
@@ -203,29 +203,31 @@ class _PratoPageState extends State<PratoPage> {
         "valor": prato.valor,
         "descricao": c.desc,
         "quantidade": Prato.qtd,
-        "status": "pedindo"
-      });
-    } finally {
-      Prato.qtd++;
-      db.setData({
-        "pedidoId": prato.id,
-        "prato": prato.nome,
-        "valor": prato.valor,
-        "descricao": c.desc,
-        "quantidade": Prato.qtd,
-        "status": "pedindo"
+        "status": "Aguardando confirmação",
+        "mesa": c.mesa
       });
       double total = double.parse(prato.valor) * Prato.qtd;
-      c.total = total + c.total.toDouble();
-      print(c.total);
+      c.total = total + c.total;
       Firestore.instance
           .collection("Mesas")
-          .document(Mesa.id)
+          .document(c.mesa)
           .updateData({"total": c.total});
+      print(c.total);
+
+    } finally {
+      Prato.qtd++;
+      db.setData(
+        {
+          "pedidoId": prato.id,
+          "prato": prato.nome,
+          "valor": prato.valor,
+          "descricao": c.desc,
+          "quantidade": Prato.qtd,
+          "status": "Aguardando confirmação",
+          "mesa": c.mesa
+        },
+      );
+      Toast.show("Prato enviado para lista de pedido", context);
     }
-    Toast.show("Prato enviado para lista de pedidos", context,
-        duration: Toast.LENGTH_LONG,
-        backgroundColor: Colors.white,
-        textColor: Colors.black);
   }
 }

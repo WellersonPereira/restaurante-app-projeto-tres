@@ -48,7 +48,6 @@ class _CadastroState extends State<Cadastro> {
                 style: TextStyle(fontSize: 25, color: Colors.red),
               ),
             ),
-            //TODO: Implementar focus;
             Container(
               padding: EdgeInsets.only(top: 16),
               child: AppText(

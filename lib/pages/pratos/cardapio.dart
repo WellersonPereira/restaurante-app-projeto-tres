@@ -8,6 +8,7 @@ import 'package:projeto_restaurante/utils/nav.dart';
 
 class Cardapio extends StatefulWidget {
   final bool admin;
+
   Cardapio({this.admin});
 
   @override
@@ -25,33 +26,36 @@ class _CardapioState extends State<Cardapio> {
     return DefaultTabController(
       length: 3,
       child: Scaffold(
-        appBar: AppBar(
-          title: Text("Restaurante"),
-          bottom: TabBar(
-            tabs: [
-              Tab(
-                text: "Entrada",
-              ),
-              Tab(
-                text: "Sobremesa",
-              ),
-              Tab(
-                text: "Bebidas",
-              )
-            ],
+          appBar: AppBar(
+            title: Text("Restaurante"),
+            bottom: TabBar(
+              tabs: [
+                Tab(
+                  text: "Principais",
+                ),
+                Tab(
+                  text: "Sobremesa",
+                ),
+                Tab(
+                  text: "Bebidas",
+                )
+              ],
+            ),
           ),
-        ),
-        body: Stack(
-          fit: StackFit.expand,
-          children: <Widget>[BgLogin(),_ifAdmin()],
-        ),
-        drawer: DrawerList(),
-        floatingActionButton: FloatingActionButton.extended(
-          icon: Icon(Icons.shopping_basket),
-          label: Text("Sacola"),
-          onPressed: () => push(context, QueryConta()),
-        ),
-      ),
+          body: Stack(
+            fit: StackFit.expand,
+            children: <Widget>[BgLogin(), _ifAdmin()],
+          ),
+          drawer: DrawerList(
+            admin: widget.admin,
+          ),
+          floatingActionButton: _ifBotao()
+//        FloatingActionButton.extended(
+//          icon: Icon(Icons.shopping_basket),
+//          label: Text("Sacola"),
+//          onPressed: () => push(context, QueryConta()),
+//        ),
+          ),
     );
   }
 
@@ -71,6 +75,18 @@ class _CardapioState extends State<Cardapio> {
           QueryPratos("Sobremesa"),
           QueryPratos("Bebidas")
         ],
+      );
+    }
+  }
+
+  _ifBotao() {
+    if (widget.admin == true) {
+      return null;
+    } else if (widget.admin == false) {
+      return FloatingActionButton.extended(
+        icon: Icon(Icons.shopping_basket),
+        label: Text("Sacola"),
+        onPressed: () => push(context, QueryConta()),
       );
     }
   }

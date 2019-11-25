@@ -14,7 +14,7 @@ class _QueryPedidosState extends State<QueryPedidos> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: db.where("status", isEqualTo: "cozinha").snapshots(),
+      stream: db.where("status", isEqualTo: "Em preparo").snapshots(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           final List<Conta> contas = snapshot.data.documents.map((document) {

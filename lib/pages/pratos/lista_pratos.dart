@@ -16,7 +16,6 @@ class ListaPrato extends StatefulWidget {
 class _ListaPratoState extends State<ListaPrato> {
   @override
   void initState() {
-    // TODO: implement initState
     Prato.qtd = 0;
   }
 
@@ -32,22 +31,50 @@ class _ListaPratoState extends State<ListaPrato> {
             onTap: () => _onClickPrato(context, p),
             child: Card(
               color: Color.fromRGBO(204, 255, 51, 85),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              child: Column(
                 children: <Widget>[
-                  FadeInImage.assetNetwork(
-                    placeholder: '',
-                    image: p.urlFoto,
-                    fit: BoxFit.cover,
-                    width: 125.0,
-                    height: 125.0,
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
-                      //TODO:Fix layout
-                      Text(p.nome, style: TextStyle(fontSize: 30),),
-                      Text("R\$ " + p.valor, style: TextStyle(fontSize: 18,),)
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          FadeInImage.assetNetwork(
+                            placeholder: '',
+                            image: p.urlFoto,
+                            fit: BoxFit.cover,
+                            width: 125.0,
+                            height: 125.0,
+                          ),
+                          Text(
+                            p.nome,
+                            style: TextStyle(
+                                fontSize: 25, fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            Padding(
+                              padding: EdgeInsets.all(5),
+                              //EdgeInsets.fromLTRB(12.0, 12.0, 12.0, 6.0),
+                              child: Text(""),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(0),
+                              child: Text(
+                                "R\$ " + p.valor,
+                                style: TextStyle(
+                                  fontSize: 20,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                 ],

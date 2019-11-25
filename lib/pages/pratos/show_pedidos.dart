@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:projeto_restaurante/bg_login.dart';
 import 'package:projeto_restaurante/model/conta.dart';
-import 'package:projeto_restaurante/model/mesa.dart';
 import 'package:projeto_restaurante/utils/alert.dart';
 import 'package:toast/toast.dart';
 
@@ -56,7 +55,7 @@ class _ShowPedidosState extends State<ShowPedidos> {
                       child: ButtonBar(
                         children: <Widget>[
                           FlatButton(
-                              child: const Text('Update'),
+                              child: const Text('Enviar'),
                               onPressed: () => _update(c)),
                           FlatButton(
                               child: const Text('Detalhes'),
@@ -78,22 +77,20 @@ class _ShowPedidosState extends State<ShowPedidos> {
     c.status = "feito";
     Firestore.instance
         .collection("Mesas")
-        .document(Mesa.id)
+        .document(c.mesa)
         .collection("Pedidos")
         .document(c.pedidoId)
-        .updateData({'status': c.status, 'entregue': Timestamp.now()});
-    //TODO: mandar notificação para o usuário
-    //alert(context, "Pedido encaminhado para o cliente");
+        .updateData({'status': c.status, 'Entregue': Timestamp.now()});
     Toast.show("Pedido encaminhado para o cliente", context,
         duration: Toast.LENGTH_LONG);
   }
 
   _detalhes(Conta c) {
-    //Todo: mostrar pop-out com detalhes do pedido.
     alert(
         context,
         "Prato: ${c.prato} \n\n"
         "Quantidade: ${c.qtd}\n\n"
-        "Detalhes: ${c.desc}");
+        "Detalhes: ${c.desc}\n\n"
+        "Mesa: " + c.mesa.substring(0,2));
   }
 }

@@ -17,7 +17,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   String _barcode = "";
   FirebaseUser currentUser;
-  bool admin = false;
+  bool admin;
 
   @override
   void initState() {
@@ -37,10 +37,10 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text("Restaurante"),
-          centerTitle: true,
-        ),
+//        appBar: AppBar(
+//          title: Text("Restaurante"),
+//          centerTitle: true,
+//        ),
         body: Stack(
           fit: StackFit.expand,
           children: <Widget>[BgLogin(), StreamBuilder<DocumentSnapshot>(
@@ -115,12 +115,13 @@ class _HomePageState extends State<HomePage> {
   }
 
   adminPage(DocumentSnapshot snapshot) {
-    return Container(
-      child: FlatButton(
-        child: Text("cardapio"),
-        onPressed: () => push(context, Cardapio(admin: true,)),
-      ),
-    );
+    return Cardapio(admin: true,);
+//      Container(
+//      child: FlatButton(
+//        child: Text("cardapio"),
+//        onPressed: () => push(context, Cardapio(admin: true,)),
+//      ),
+//    );
   }
 
   Future scan() async {
@@ -132,8 +133,6 @@ class _HomePageState extends State<HomePage> {
 
         final user = await FirebaseAuth.instance.currentUser();
         final nomeUser = user.displayName;
-
-        //TODO: Implementar verificação se a mesa já está ocupada {if mesa x is ocupada == true => error}
 
         //Criando Id
         String hora = TimeOfDay.now().toString().substring(10, 15);
@@ -161,7 +160,7 @@ class _HomePageState extends State<HomePage> {
         setState(() => this._barcode = 'Error desconhecido $e');
       }
     } on FormatException {
-      setState(() => this._barcode = 'Scaneamento interrompido)');
+      setState(() => this._barcode = 'Scaneamento interrompido');
     } catch (e) {
       setState(() => this._barcode = 'Error desconhecido : $e');
     }

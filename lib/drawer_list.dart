@@ -23,7 +23,7 @@ class _DrawerListState extends State<DrawerList> {
           ? CircleAvatar(
               backgroundImage: NetworkImage(user.photoUrl),
             )
-          : FlutterLogo(),
+          : Image.asset('assets/images/user.png'),
     );
 
   }

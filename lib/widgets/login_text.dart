@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class AppText extends StatelessWidget {
-  //TODO: Implement input type
   String label;
   String hint;
   bool obscure = false;

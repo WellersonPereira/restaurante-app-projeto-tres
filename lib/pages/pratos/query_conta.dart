@@ -19,7 +19,7 @@ class _QueryContaState extends State<QueryConta> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
-      stream: db.where("quantidade", isGreaterThan: 0).where('status', isEqualTo: "pedindo").snapshots(),
+      stream: db.where("quantidade", isGreaterThan: 0)/*.where('status', isEqualTo: "pedindo")*/.snapshots(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
           final List<Conta> contas = snapshot.data.documents.map((document) {
